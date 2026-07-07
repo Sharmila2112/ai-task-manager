@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Progress Report{% endblock %}
+{% block content %}
+<h2 class="mb-4">Progress Report</h2>
+
+{% if error %}
+<div class="alert alert-warning">{{ error }}</div>
+{% endif %}
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ stats.total }}</h3>
+                <p class="text-muted mb-0">Total Tasks</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ stats.completed }}</h3>
+                <p class="text-muted mb-0">Completed</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ stats.pending }}</h3>
+                <p class="text-muted mb-0">Pending</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ stats.completion_rate }}%</h3>
+                <p class="text-muted mb-0">Completion Rate</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if ai_summary %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">AI Summary</h5>
+        <p class="card-text">{{ ai_summary }}</p>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6">
+        <h5>By Priority</h5>
+        <ul class="list-group">
+            {% for priority, count in stats.by_priority.items() %}
+            <li class="list-group-item d-flex justify-content-between">
+                {{ priority }} <span class="badge bg-secondary">{{ count }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h5>By Category</h5>
+        <ul class="list-group">
+            {% for category, count in stats.by_category.items() %}
+            <li class="list-group-item d-flex justify-content-between">
+                {{ category }} <span class="badge bg-secondary">{{ count }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<a href="{{ url_for('tasks.index') }}" class="btn btn-outline-secondary mt-4">Back to Tasks</a>
+{% endblock %}

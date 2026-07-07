@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <h2 class="mb-3">AI Assistant</h2>
+        <p class="text-muted">
+            Try things like <em>"add a high priority task to prep for the interview"</em>
+            or <em>"what should I focus on today?"</em>
+        </p>
+
+        {% if error %}
+            <div class="alert alert-warning">{{ error }}</div>
+        {% endif %}
+
+        {% if reply_text %}
+            <div class="alert alert-info">
+                <strong>Assistant:</strong> {{ reply_text }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="mb-3">
+                <textarea
+                    class="form-control" name="message" rows="3"
+                    placeholder="Type a message..." required
+                ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+            <a href="{{ url_for('tasks.index') }}" class="btn btn-outline-secondary">Back to Tasks</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
